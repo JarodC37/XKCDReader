@@ -4,9 +4,13 @@ const randomNumber = () => {
 }
 
 const initComic = (number) => {
+    resetInputAndError();
+    
     const comicPanel = document.querySelector(`#comic`);
-    const proxy = 'https://cors-anywhere.herokuapp.com/'
-    const link = `https://xkcd.com/${number}/info.0.json`
+    // const proxy = 'https://cors-anywhere.herokuapp.com/'
+    // const link = `https://xkcd.com/${number}/info.0.json`
+    const proxy = '';
+    const link = `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${number}`;
     fetch(proxy+link)
     .then(res => res.json())
     .then(comic => {
@@ -27,6 +31,11 @@ const getIndexElement = () => {
 
 const updateIndex = (index) => {
     getIndexElement().innerHTML = index;
+}
+
+const resetInputAndError = () => {
+    document.querySelector(`#userInput`).value = '';
+    document.querySelector(`#errorMsg`).classList.add('hidden');
 }
 
 
@@ -55,5 +64,16 @@ prevBtn.addEventListener('click', function() {
 
 goBtn.addEventListener('click', function() {
     let userInput = + document.querySelector(`#userInput`).value;
-    initComic(userInput);
+    //ensure comic number is valid
+    let errors = false;
+    if (userInput < 1 || userInput >2486 || userInput %1 !== 0) {
+        errors = true;
+    }
+    if (errors){
+        document.querySelector(`#errorMsg`).classList.remove('hidden')
+    }
+    else{
+        initComic(userInput);
+    }
 }, false)
+
