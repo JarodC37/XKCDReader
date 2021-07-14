@@ -3,26 +3,50 @@ const randomNumber = () => {
     return (today.getTime()&2485)+1;
 }
 
+// const initComic = (number) => {
+//     resetInputAndError();
+    
+//     const comicPanel = document.querySelector(`#comic`);
+//     // const proxy = 'https://cors-anywhere.herokuapp.com/'
+//     // const link = `https://xkcd.com/${number}/info.0.json`
+//     const proxy = '';
+//     const link = `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${number}`;
+//     fetch(proxy+link)
+//     .then(res => res.json())
+//     .then(comic => {
+//         // console.log(comic.img)
+//         // const item = document.createElement('div')
+//         // item.innerHTML = `<img src="${comic.img}" >`
+//         // comicPanel.append(item)
+//         comicPanel.innerHTML = `<text id="comicTitle" class="comicTitle">${comic.safe_title}</text>
+//                             <text class="comicNumber">Comic Number: <span id="comicID">${comic.num}</span></text>
+//                             <img src="${comic.img}" >`;
+//     });
+//     updateIndex(number)
+// }
+
 const initComic = (number) => {
     resetInputAndError();
     
-    const comicPanel = document.querySelector(`#comic`);
-    // const proxy = 'https://cors-anywhere.herokuapp.com/'
-    // const link = `https://xkcd.com/${number}/info.0.json`
-    const proxy = '';
-    const link = `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${number}`;
-    fetch(proxy+link)
-    .then(res => res.json())
-    .then(comic => {
-        // console.log(comic.img)
-        // const item = document.createElement('div')
-        // item.innerHTML = `<img src="${comic.img}" >`
-        // comicPanel.append(item)
-        comicPanel.innerHTML = `<text id="comicTitle" class="comicTitle">${comic.safe_title}</text>
-                            <text class="comicNumber">Comic Number: <span id="comicID">${comic.num}</span></text>
-                            <img src="${comic.img}" >`;
-    });
+    const comicPanels = document.querySelectorAll(`#comic`);
+    let offset = Math.floor(comicPanels.length / 2);
+    //const link = `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${number}`;
+    comicPanels.forEach((comicPanel, index) => {
+        let link = `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${((number+(index-offset))%2488) < 1 ? 2488 + ((number+(index-offset))%2488) : ((number+(index-offset))%2488)}`;
+        fetch(link)
+        .then(res => res.json())
+        .then(comic => {
+            // console.log(comic.img)
+            // const item = document.createElement('div')
+            // item.innerHTML = `<img src="${comic.img}" >`
+            // comicPanel.append(item)
+            comicPanel.innerHTML = `<text id="comicTitle" class="comicTitle">${comic.safe_title}</text>
+                                <text class="comicNumber">Comic Number: <span id="comicID">${comic.num}</span></text>
+                                <img src="${comic.img}" >`;
+        });
+    })
     updateIndex(number)
+    console.log(number)
 }
 
 const getIndexElement = () => {
@@ -66,7 +90,7 @@ goBtn.addEventListener('click', function() {
     let userInput = + document.querySelector(`#userInput`).value;
     //ensure comic number is valid
     let errors = false;
-    if (userInput < 1 || userInput >2486 || userInput %1 !== 0) {
+    if (userInput < 1 || userInput >2488 || userInput %1 !== 0) {
         errors = true;
     }
     if (errors){

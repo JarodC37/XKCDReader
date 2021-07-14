@@ -86,3 +86,53 @@
   .closebtn:hover {
     color: black;
   }
+
+
+
+
+  div.scrollmenu {
+    background-color: #333;
+    overflow: auto;
+    white-space: nowrap;
+    text-align: center;
+  }
+  
+  div.scrollmenu a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+  }
+  
+  div.scrollmenu a:hover {
+    background-color: #777;
+  }
+  .outer {
+    display: flex; /* displays flex-items (children) inline */
+    overflow-x: scroll;
+    align-items: center;
+    margin: 0 auto;
+    justify-content: center;
+  }
+  .outer::before,
+  .outer::after {
+    content: '';
+    flex: 1;
+  }
+  
+  .inner {
+    flex-basis: auto;
+    margin: auto 0;
+  }
+
+  .innerxxxx {
+    flex: 0 0 25%; /* doesn't grow nor shrink, initial width set to 25% of the parent's */
+    flex-grow: 2;
+    padding: 10 10 10 10;
+
+        justify-content: center;
+    align-items: flex-start;
+    padding: 0 15 10 10px;
+    min-width: 0;
+  }
