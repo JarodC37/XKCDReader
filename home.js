@@ -1,52 +1,59 @@
+// generate random seed
 const randomNumber = () => {
     let today = new Date();
-    return (today.getTime()%2488)+1;
+    return (today.getTime()%2496)+1;
 }
 
 
-// let maxComicIndex; 
+let maxComicIndex; 
 
-// const getMaxComicIndex = () => {
-//     return fetch('https://intro-to-js-playground.vercel.app/api/xkcd-comics/')
-//     .then(res => res.json())
-//     .then(comic => {
-//         return comic.num;
-//     })
-// }
+// get largest comic index using default api page
+const getMaxComicIndex = () => {
+    return fetch('https://intro-to-js-playground.vercel.app/api/xkcd-comics/')
+    .then(res => res.json())
+    .then(comic => {
+        return comic.num;
+    })
+}
 
-// async function update() {
-//     maxComicIndex = await getMaxComicIndex();
-// }
+// updates line in HTML to indicate largest comic index
+async function update() {
+    maxComicIndex = await getMaxComicIndex();
+    let max = document.querySelector(`#max`);
+    max.innerHTML = "Max comic index = " + maxComicIndex;
+}
 
-// update();
-// console.log(`maxcomi ${maxComicIndex}`)
+update();
 
+// function to reload the comic with the comic index as a parameter
 const initComic = (number) => {
     resetInputAndError();
-    
-    const comicPanels = document.querySelectorAll("div[id^='comic']");
-    let offset = Math.floor(comicPanels.length / 2);
-    //const link = `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${number}`;
-    comicPanels.forEach((comicPanel, index) => {
-        let link = `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${((number+(index-offset))%2488) < 1 ? 2488 + ((number+(index-offset))%2488) : ((number+(index-offset))%2488)}`;
-        fetch(link)
-        .then(res => res.json())
-        .then(comic => {
-            // const item = document.createElement('div')
-            // item.innerHTML = `<img src="${comic.img}" >`
-            comicPanel.innerHTML = `<text id="comicTitle" class="comicTitle">${comic.safe_title}</text>
-                                <text class="comicNumber">Comic Number: <span id="comicID">${comic.num}</span></text>
-                                <img src="${comic.img}" >`;
-        });
-    })
-    updateIndex(number)
-    console.log(number)
+    getMaxComicIndex().then(res => {
+        const comicPanels = document.querySelectorAll("div[id^='comic']");
+        // offset to get comic panels to right and left of centre comic
+        let offset = Math.floor(comicPanels.length / 2);
+        comicPanels.forEach((comicPanel, index) => {
+            // if index <1, rollback to 2497 etc.
+            let link = `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${((number+(index-offset))%res) < 1 ? res + ((number+(index-offset))%res) : ((number+(index-offset))%res)}`;
+            fetch(link)
+            .then(res => res.json())
+            .then(comic => {
+                comicPanel.innerHTML = `<text id="comicTitle" class="comicTitle">${comic.safe_title}</text>
+                                    <text class="comicNumber">Comic Number: <span id="comicID">${comic.num}</span></text>
+                                    <img src="${comic.img}" >`;
+            });
+        })
+        updateIndex(number)
+        console.log(`res = ${res}`)
+    });
 }
 
+// get the current comic index displayed
 const getIndexElement = () => {
     return curIndex = document.querySelector("#currentIndex")
 }
 
+// updates the HTML element with the comic's index
 const updateIndex = (index) => {
     getIndexElement().innerHTML = index;
 }
@@ -71,6 +78,7 @@ randomBtn.addEventListener('click', function() {
     initComic(randomNumber());
 }, false);
 
+// stores current number of comics displayed (1/3/5) and advances by that number
 nextBtn.addEventListener('click', function() {
     let currentIndex = + getIndexElement().innerHTML;
     let numberItemsDisplayed = + document.querySelector(`#numberItemsDisplayed`).innerHTML;
@@ -85,9 +93,8 @@ prevBtn.addEventListener('click', function() {
 
 goBtn.addEventListener('click', function() {
     let userInput = + document.querySelector(`#userInput`).value;
-    //ensure comic number is valid
     let errors = false;
-    if (userInput < 1 || userInput >2488 || userInput %1 !== 0) {
+    if (userInput < 1 || userInput >2497 || userInput %1 !== 0) {
         errors = true;
     }
     if (errors){
@@ -98,6 +105,8 @@ goBtn.addEventListener('click', function() {
     }
 }, false);
 
+
+// hides comic panels based on how many to show
 changeBtn.addEventListener('click', function() {
     let numComicsToShow = + document.querySelector('#numberComics').value;
     document.querySelector(`#numberItemsDisplayed`).innerHTML = numComicsToShow;
