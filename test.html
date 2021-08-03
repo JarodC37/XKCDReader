@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<body class="w3-light-grey">
+
+<!-- w3-content defines a container for fixed size centered content, 
+and is wrapped around the whole page content, except for the footer in this example -->
+<div class="w3-content" style="max-width:1400px">
+
+<!-- Header -->
+<header class="w3-container w3-center w3-padding-32"> 
+  <h1><b>Comic Reader</b></h1>
+  <p>Welcome!</p>
+</header>
+
+<!-- Grid -->
+<div class="w3-row">
+
+
+<!-- END GRID -->
+</div><br>
+
+<!-- END w3-content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
+  <button class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">Previous</button>
+  <button class="w3-button w3-black w3-padding-large w3-margin-bottom">Next »</button>
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+        <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      </head>
+      <body>
+          <h2>Hello</h2>
+          <div id="comic">Image</div>
+          <script src="home.js"></script>
+      </body>
+</html>
+
+// const initComic = (number) => {
+  //     resetInputAndError();
+      
+  //     const comicPanel = document.querySelector(`#comic`);
+  //     // const proxy = 'https://cors-anywhere.herokuapp.com/'
+  //     // const link = `https://xkcd.com/${number}/info.0.json`
+  //     const proxy = '';
+  //     const link = `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${number}`;
+  //     fetch(proxy+link)
+  //     .then(res => res.json())
+  //     .then(comic => {
+  //         // console.log(comic.img)
+  //         // const item = document.createElement('div')
+  //         // item.innerHTML = `<img src="${comic.img}" >`
+  //         // comicPanel.append(item)
+  //         comicPanel.innerHTML = `<text id="comicTitle" class="comicTitle">${comic.safe_title}</text>
+  //                             <text class="comicNumber">Comic Number: <span id="comicID">${comic.num}</span></text>
+  //                             <img src="${comic.img}" >`;
+  //     });
+  //     updateIndex(number)
+  // }

@@ -113,7 +113,7 @@
     overflow-x: scroll;
     align-items: center;
     margin: 0 auto;
-    justify-content: center;
+    align-items: flex-start;
   }
   .outer::before,
   .outer::after {
@@ -123,16 +123,20 @@
   
   .inner {
     flex-basis: auto;
-    margin: auto 0;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
-  .innerxxxx {
-    flex: 0 0 25%; /* doesn't grow nor shrink, initial width set to 25% of the parent's */
-    flex-grow: 2;
-    padding: 10 10 10 10;
-
-        justify-content: center;
-    align-items: flex-start;
-    padding: 0 15 10 10px;
-    min-width: 0;
+  .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
