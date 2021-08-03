@@ -44,7 +44,6 @@ const initComic = (number) => {
             });
         })
         updateIndex(number)
-        console.log(`res = ${res}`)
     });
 }
 
